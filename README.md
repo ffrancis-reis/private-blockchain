@@ -109,8 +109,7 @@ You can check in your terminal the the Express application is listening in the P
      *  
      *  1. Use hex2ascii module to decode the data
      *  2. Because data is a javascript object use JSON.parse(string) to get the Javascript Object
-     *  3. Resolve with the data and make sure that you don't need to return the data for the `genesis block` 
-     *     or Reject with an error.
+     *  3. Resolve with the data and make sure that you don't need to return the data for the `genesis block` or Reject with an error.
      */
 3. `blockchain.js` file. In the `Blockchain` class we are going to implement the method:
     `_addBlock(block)`.
