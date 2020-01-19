@@ -101,6 +101,7 @@ You can check in your terminal the the Express application is listening in the P
      *  5. Resolve true or false depending if it is valid or not.
      *  Note: to access the class values inside a Promise code you need to create an auxiliary value `let self = this;`
      */
+     
 2. `block.js` file. In the `Block` class we are going to implement the method:
     `getBData()`.
     /**
@@ -111,6 +112,7 @@ You can check in your terminal the the Express application is listening in the P
      *  2. Because data is a javascript object use JSON.parse(string) to get the Javascript Object
      *  3. Resolve with the data and make sure that you don't need to return the data for the `genesis block` or Reject with an error.
      */
+     
 3. `blockchain.js` file. In the `Blockchain` class we are going to implement the method:
     `_addBlock(block)`.
     /**
@@ -125,6 +127,7 @@ You can check in your terminal the the Express application is listening in the P
      * Note: the symbol `_` in the method name indicates in the javascript convention 
      * that this method is a private method. 
      */
+     
 4. `blockchain.js` file. In the `Blockchain` class we are going to implement the method:
     `requestMessageOwnershipVerification(address)`
     /**
@@ -135,6 +138,7 @@ You can check in your terminal the the Express application is listening in the P
      * The method return a Promise that will resolve with the message to be signed
      * @param {*} address 
      */
+     
 5. `blockchain.js` file. In the `Blockchain` class we are going to implement the method:
     `submitStar(address, message, signature, star)`
     /**
@@ -154,6 +158,7 @@ You can check in your terminal the the Express application is listening in the P
      * @param {*} signature 
      * @param {*} star 
      */
+     
 6. `blockchain.js` file. In the `Blockchain` class we are going to implement the method:
     `getBlockByHash(hash)`
     /**
@@ -162,6 +167,7 @@ You can check in your terminal the the Express application is listening in the P
      * Search on the chain array for the block that has the hash.
      * @param {*} hash 
      */
+     
 7. `blockchain.js` file. In the `Blockchain` class we are going to implement the method:
     `getStarsByWalletAddress (address)`
     /**
@@ -170,6 +176,7 @@ You can check in your terminal the the Express application is listening in the P
      * 
      * @param {*} address 
      */
+     
 8. `blockchain.js` file. In the `Blockchain` class we are going to implement the method:
     `validateChain()`
     /**
