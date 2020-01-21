@@ -196,24 +196,20 @@ class Blockchain {
     let self = this;
     let stars = [];
 
-    let data = self.chain.map(block => {
-      let star = block.getBData().then(result => {
-        return result;
+    self.chain
+      .filter(block => block.height > 0)
+      .map(block => {
+        let { dec, ra, story } = block.getBData();
+
+        stars.push({
+          owner: address,
+          star: { dec, ra, story }
+        });
       });
 
-      return {
-        owner: address,
-        star: { dec: star.dec, ra: star.ra, story: star.story }
-      };
-    });
-
-    stars.push(data);
-
-    let promise = new Promise(resolve => {
+    return new Promise(resolve => {
       resolve(stars);
     });
-
-    return promise;
   }
   // {
   //   owner: address,
