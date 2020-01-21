@@ -197,11 +197,13 @@ class Blockchain {
     let stars = [];
 
     let data = self.chain.map(block => {
-      let star = block.getBData().then(result => result);
+      let star = block.getBData().then(result => {
+        return result;
+      });
 
       return {
         owner: address,
-        star
+        star: { dec: star.dec, ra: star.ra, story: star.story }
       };
     });
 

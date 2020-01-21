@@ -44,11 +44,7 @@ class Block {
       const blockHash = await SHA256(JSON.stringify(block)).toString();
 
       // Comparing if the hashes changed
-      if (
-        blockHash &&
-        self.chain.length > 0 &&
-        blockHash === self.chain[self.chain.length - 1].hash
-      ) {
+      if (blockHash !== self.hash) {
         // Returning the Block is valid
         resolve(true);
       } else {
@@ -80,7 +76,7 @@ class Block {
       // Parse the data to an object to be retrieve.
       const decodedData = await JSON.parse(decoded);
 
-      if (decodedData && decodedData.data !== "Genesis Block") {
+      if (decodedData && self.height > 0) {
         resolve(decodedData);
       }
     });
