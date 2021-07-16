@@ -12,44 +12,46 @@ const bodyParser = require("body-parser");
 /**
  * Require the Blockchain class. This allow us to have only one instance of the class.
  */
-const BlockChain = require("./src/blockchain.js");
+const BlockChain = require('./src/blockchain.js');
 
 class ApplicationServer {
-  constructor() {
-    //Express application object
-    this.app = express();
-    //Blockchain class object
-    this.blockchain = new BlockChain.Blockchain();
-    //Method that initialized the express framework.
-    this.initExpress();
-    //Method that initialized middleware modules
-    this.initExpressMiddleWare();
-    //Method that initialized the controllers where you defined the endpoints
-    this.initControllers();
-    //Method that run the express application.
-    this.start();
-  }
 
-  initExpress() {
-    this.app.set("port", 8000);
-  }
+	constructor() {
+		//Express application object
+		this.app = express();
+		//Blockchain class object
+		this.blockchain = new BlockChain.Blockchain();
+		//Method that initialized the express framework.
+		this.initExpress();
+		//Method that initialized middleware modules
+		this.initExpressMiddleWare();
+		//Method that initialized the controllers where you defined the endpoints
+		this.initControllers();
+		//Method that run the express application.
+		this.start();
+	}
 
-  initExpressMiddleWare() {
-    this.app.use(morgan("dev"));
-    this.app.use(bodyParser.urlencoded({ extended: true }));
-    this.app.use(bodyParser.json());
-  }
+	initExpress() {
+		this.app.set("port", 8000);
+	}
 
-  initControllers() {
-    require("./BlockchainController.js")(this.app, this.blockchain);
-  }
+	initExpressMiddleWare() {
+		this.app.use(morgan("dev"));
+		this.app.use(bodyParser.urlencoded({extended:true}));
+		this.app.use(bodyParser.json());
+	}
 
-  start() {
-    let self = this;
-    this.app.listen(this.app.get("port"), () => {
-      console.log(`Server Listening for port: ${self.app.get("port")}`);
-    });
-  }
+	initControllers() {
+        require("./BlockchainController.js")(this.app, this.blockchain);
+	}
+
+	start() {
+		let self = this;
+		this.app.listen(this.app.get("port"), () => {
+			console.log(`Server Listening for port: ${self.app.get("port")}`);
+		});
+	}
+
 }
 
 new ApplicationServer();
