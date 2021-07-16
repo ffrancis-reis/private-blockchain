@@ -17,7 +17,7 @@ class Block {
   constructor(data) {
     this.hash = null; // Hash of the block
     this.height = 0; // Block Height (consecutive number of each block)
-    this.body = Buffer(JSON.stringify(data)).toString("hex"); // Will contain the transactions stored in the block, by default it will encode the data
+    this.body = Buffer.from(JSON.stringify(data)).toString("hex"); // Will contain the transactions stored in the block, by default it will encode the data
     this.time = 0; // Timestamp for the Block creation
     this.previousBlockHash = null; // Reference to the previous Block Hash
   }
@@ -36,20 +36,23 @@ class Block {
    */
   validate() {
     let self = this;
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       // Save in auxiliary variable the current block hash
-      const block = self.body;
+      const block = self.hash;
+      self.hash = null;
 
       // Recalculate the hash of the Block
-      const blockHash = await SHA256(JSON.stringify(block)).toString();
+      const blockHash = SHA256(JSON.stringify(self)).toString();
 
       // Comparing if the hashes changed
-      if (blockHash !== self.hash) {
+      if (blockHash !== block) {
+        self.hash = blockHash;
+
         // Returning the Block is valid
-        resolve(true);
+        return resolve(true);
       } else {
         // Returning the Block is not valid
-        reject(false);
+        return reject(false);
       }
     });
   }
@@ -67,20 +70,21 @@ class Block {
     let self = this;
     // Getting the encoded data saved in the Block
     const data = self.body;
+
+    // Decoding the data to retrieve the JSON representation of the object
     const decoded = hex2ascii(data);
+
+    // Parse the data to an object to be retrieve.
     const decodedData = JSON.parse(decoded);
 
-    if (decodedData && self.height > 0) {
-      return decodedData;
-    }
-
-    return null;
-
-    // Resolve with the data if the object isn't the Genesis block
-    // return new Promise(async resolve => {
-    // Decoding the data to retrieve the JSON representation of the object
-    // Parse the data to an object to be retrieve.
-    // });
+    return new Promise((resolve, reject) => {
+      // Resolve with the data if the object isn't the Genesis block
+      if (decodedData && self.height > 0) {
+        return resolve(decodedData);
+      } else {
+        return reject(Error("something strange happened"));
+      }
+    });
   }
 }
 
