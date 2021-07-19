@@ -78,6 +78,8 @@ class Blockchain {
 
     self.height++;
 
+    this.validateChain();
+
     return new Promise(async (resolve, reject) => {
       if (block) {
         resolve(block);
@@ -231,18 +233,25 @@ class Blockchain {
         errorLog.push(block.height);
       }
 
-      if (block.previousBlockHash !== self.chain[block.height - 1].hash) {
+      if (
+        self.height > 0 &&
+        block.previousBlockHash !== self.chain[block.height - 1].hash
+      ) {
         errorLog.push(validBlock);
       }
     });
 
-    return new Promise(async (resolve, reject) => {
-      if (errorLog.length > 0) {
-        resolve(true);
+    return new Promise((resolve, reject) => {
+      if (errorLog.length === 0) {
+        resolve([]);
       } else {
         reject(errorLog);
       }
     });
+  }
+
+  getBlocksByAmount(count) {
+    return this.chain.slice(0, count);
   }
 }
 
